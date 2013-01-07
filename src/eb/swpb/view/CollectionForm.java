@@ -20,13 +20,13 @@ import javax.swing.JTable;
 
 public class CollectionForm extends javax.swing.JFrame {
     
-    private JButton CollectionAddBookButton;
-    private JButton CollectionBackToModeChooserButton;
-    private JButton CollectionModifyBookButton;
-    private JButton CollectionReceiveBookButton;
-    private JButton CollectionRemoveBookButton;
-    private JButton CollectionRentBookButton;
-    private JButton CollectionSearchBookButton;
+    public JButton CollectionAddBookButton;
+    public JButton CollectionBackToModeChooserButton;
+    public JButton CollectionModifyBookButton;
+    public JButton CollectionReceiveBookButton;
+    public JButton CollectionRemoveBookButton;
+    public JButton CollectionRentBookButton;
+    public JButton CollectionSearchBookButton;
     private JLabel jLabel1;
     private JScrollPane jScrollPane1;
     private JSeparator jSeparator1;
