@@ -15,5 +15,7 @@ public class EBSWPB {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Logic logic = new Logic();
+        logic.start();
     }
 }
