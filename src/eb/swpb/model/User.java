@@ -21,6 +21,8 @@ public class User {
     private String postCode;
     private String city;
     private int group;
+    private String email;
+    private String pass;
 
     /**
      * @return the idUser
@@ -146,6 +148,48 @@ public class User {
      */
     public void setCity(String city) {
         this.city = city;
+    }
+
+    /**
+     * @return the group
+     */
+    public int getGroup() {
+        return group;
+    }
+
+    /**
+     * @param group the group to set
+     */
+    public void setGroup(int group) {
+        this.group = group;
+    }
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * @return the pass
+     */
+    public String getPass() {
+        return pass;
+    }
+
+    /**
+     * @param pass the pass to set
+     */
+    public void setPass(String pass) {
+        this.pass = pass;
     }
     
 }

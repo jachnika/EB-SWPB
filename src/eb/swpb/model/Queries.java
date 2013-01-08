@@ -62,16 +62,117 @@ public class Queries {
         String query;
         int size;
         LinkedList rows;
+        
         query = "SELECT * FROM USERS WHERE LOGIN = \"" + login + "\" AND PASSWORD = \"" + password + "\"";
+        
         settings = tools.readSettingsFromFile();
         rows = executeSQLQuery(query, settings);
         size = rows.size();
-        if (size != 1) {
+        
+        if (size != 1) 
+        {
             return success;
-        } else {
+        } 
+        else 
+        {
             success = true;
             return success;
         }
     }
+    //a ta funkcja wyszukuje :)
+    //na wejscie whatDoYouLookingFor - szukany ci±g
+    //na wejscie whereDoYouLookingFor - w której kolumnie
+    //na wejscie whichObjectDoYouLookingFor - w której tabeli
+    //na wyj¶ciu sukces or not
+    //
+    public LinkedList search(String whatDoYouLookingFor, String whereDoYouLookingFor, String whichObjectDoYouLookingFor, Tools tools) throws Exception 
+    {
+        Settings settings;
+        String query;
+        LinkedList rows;
+        
+        query = "SELECT * FROM "+whichObjectDoYouLookingFor+" WHERE " + whereDoYouLookingFor + " = \"" + whatDoYouLookingFor + "\"";
+        settings = tools.readSettingsFromFile();
+        rows = executeSQLQuery(query, settings);
+       
+        return rows;
+    }
+    
+    public boolean addUser(User user, Tools tools) throws Exception
+    {
+        boolean success = false;
+        Settings settings;
+        String query;
+        LinkedList rows;
+        settings = tools.readSettingsFromFile();
+        
+        query = "INSERT INTO USERSDATA VALUES ( \""
+                + user.getUserName() + "\", \""
+                + user.getUserSurname() + "\", \""
+                + user.getBirthday() + "\", \""
+                + user.getStreet() + "\", \""
+                + user.getHouseNr() + "\", \""
+                + user.getFlatNr() + "\", \""
+                + user.getPostCode() + "\", \""
+                + user.getCity() + "\", \""
+                + user.getGroup() + "\";";
+        rows = executeSQLQuery(query, settings);
+        
+        query = "INSERT INTO USERS VALUES ( \""
+                + user.getEmail() + "\", \""
+                + user.getPass() + "\";";
+        
+        rows = executeSQLQuery(query, settings);
+        return success;
+    }
+    
+    public boolean updateUser(User user, Tools tools) throws Exception
+    {
+        boolean success = false;
+        Settings settings;
+        String query;
+        LinkedList rows;
+        settings = tools.readSettingsFromFile();
+        
+        query = "UPDATE USERSDATA SET ( NAME=\""
+                + user.getUserName() + "\", SURNAME=\""
+                + user.getUserSurname() + "\", BIRTHDAY=\""
+                + user.getBirthday() + "\", STREET=\""
+                + user.getStreet() + "\", HOUSENR=\""
+                + user.getHouseNr() + "\", FLATNR=\""
+                + user.getFlatNr() + "\", POSTCODE=\""
+                + user.getPostCode() + "\", CITY=\""
+                + user.getCity() + "\", GROUP=\""
+                + user.getGroup() + "\";";
+        rows = executeSQLQuery(query, settings);
+        
+        query = "UPDATE USERS SET ( LOGIN=\""
+                + user.getEmail() + "\", PASSWORD=\""
+                + user.getPass() + "\";";
+        
+        rows = executeSQLQuery(query, settings);
+        return success;
+    }
+    
+    public boolean deleteUser(User user, Tools tools) throws Exception
+    {
+        boolean success = false;
+        Settings settings;
+        String query;
+        LinkedList rows;
+        settings = tools.readSettingsFromFile();
+        
+        query = "DELETE FROM USERSDATA WHERE USERID="
+                + user.getIdUser() + ";";
+        rows = executeSQLQuery(query, settings);
+        
+        query = "UPDATE USERS SET ( LOGIN=\""
+                + user.getEmail() + "\", PASSWORD=\""
+                + user.getPass() + "\";";
+        
+        rows = executeSQLQuery(query, settings);
+        return success;
+    }
+    
     
 }
