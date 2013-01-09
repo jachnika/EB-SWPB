@@ -48,8 +48,8 @@ public class LoginForm {
                 
                 enterButton = new JButton("Zatwierd¼");
                 exitButton = new JButton("Wyjd¼");
-                userTextField = new JTextField("Nazwa u¿ytkownika");
-                passTextField = new JTextField("Has³o");
+                userTextField = new JTextField("ARKADIUSZ.JACHNIK@GMAIL.COM");
+                passTextField = new JTextField("12345678");
 		enterButton.addActionListener(listener);
                 exitButton.addActionListener(listener);
                 layout.setVerticalGroup(

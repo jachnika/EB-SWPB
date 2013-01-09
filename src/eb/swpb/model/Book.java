@@ -11,25 +11,25 @@ import java.util.Date;
  * @author jachnika
  */
 public class Book{
-    private int idBook;
+    private String idBook;
     private String title;
     private String authorName;
     private String authorSurname;
     private String publishingHouse;
-    private Date publDate;
+    private String publDate;
     private String attention;
 
     /**
      * @return the idBook
      */
-    public int getIdBook() {
+    public String getIdBook() {
         return idBook;
     }
 
     /**
      * @param idBook the idBook to set
      */
-    public void setIdBook(int idBook) {
+    public void setIdBook(String idBook) {
         this.idBook = idBook;
     }
 
@@ -92,14 +92,14 @@ public class Book{
     /**
      * @return the publDate
      */
-    public Date getPublDate() {
+    public String getPublDate() {
         return publDate;
     }
 
     /**
      * @param publDate the publDate to set
      */
-    public void setPublDate(Date publDate) {
+    public void setPublDate(String publDate) {
         this.publDate = publDate;
     }
 

@@ -8,6 +8,7 @@ import java.awt.Component;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 import javax.swing.JOptionPane;
@@ -19,7 +20,7 @@ import javax.swing.JOptionPane;
 public class Queries {
     
 
-    public LinkedList executeSQLQuery(String query, Settings settings) throws Exception {
+    public LinkedList<String> executeSQLQuery(String query, Settings settings,boolean isUpdate) throws Exception {
         try {
             Connection connect = null;
             Statement statement = null;
@@ -27,30 +28,40 @@ public class Queries {
             int colSize;
             int rowSize;
             int rowIter;
+            
+            LinkedList rows = new LinkedList();
             Class.forName("com.mysql.jdbc.Driver");
             connect = DriverManager.getConnection("jdbc:mysql://" + settings.getSqlAddr(), settings.getUser(), settings.getPassword());
             statement = connect.createStatement();
-            resultSet = statement.executeQuery(query);
-            colSize = resultSet.getMetaData().getColumnCount();
-            rowSize = 0;
-            while (resultSet.next()) {
-                rowSize++;
-            }
-            LinkedList rows = new LinkedList();
-            rowIter = 0;
-            resultSet.beforeFirst();
-            while (resultSet.next()) {
-                LinkedList columns = new LinkedList();
-                for (int i = 1; i <= colSize; i++) {
-                    columns.add(resultSet.getString(i));
+            if(isUpdate==false)
+            {
+                resultSet = statement.executeQuery(query);
+                colSize = resultSet.getMetaData().getColumnCount();
+                rowSize = 0;
+                while (resultSet.next()) {
+                    rowSize++;
                 }
-                rows.add(columns);
+                
+                rowIter = 0;
+                resultSet.beforeFirst();
+                while (resultSet.next()) {
+                    LinkedList<String> columns = new LinkedList<String>();
+                    for (int i = 1; i <= colSize; i++) {
+                        columns.add(resultSet.getString(i));
+                    }
+                    rows.add(columns);
+                }
             }
+            else
+            {
+                rowIter = statement.executeUpdate(query);
+            }
+            
             connect.close();
             statement.close();
             resultSet.close();
             return rows;
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             throw e;
         }
     }
@@ -63,10 +74,10 @@ public class Queries {
         int size;
         LinkedList rows;
         
-        query = "SELECT * FROM USERS WHERE LOGIN = \"" + login + "\" AND PASSWORD = \"" + password + "\"";
+        query = "SELECT * FROM USERS WHERE EMAIL = \"" + login + "\" AND PASSWORD = \"" + password + "\"";
         
         settings = tools.readSettingsFromFile();
-        rows = executeSQLQuery(query, settings);
+        rows = executeSQLQuery(query, settings,false);
         size = rows.size();
         
         if (size != 1) 
@@ -91,9 +102,9 @@ public class Queries {
         String query;
         LinkedList rows;
         
-        query = "SELECT * FROM "+whichObjectDoYouLookingFor+" WHERE " + whereDoYouLookingFor + " = \"" + whatDoYouLookingFor + "\"";
+        query = "SELECT * FROM "+whichObjectDoYouLookingFor+" WHERE " + whereDoYouLookingFor + " LIKE \"" + whatDoYouLookingFor + "\"";
         settings = tools.readSettingsFromFile();
-        rows = executeSQLQuery(query, settings);
+        rows = executeSQLQuery(query, settings,false);
        
         return rows;
     }
@@ -106,7 +117,7 @@ public class Queries {
         LinkedList rows;
         settings = tools.readSettingsFromFile();
         
-        query = "INSERT INTO USERSDATA VALUES ( \""
+        query = "INSERT INTO USERS VALUES ( \""
                 + user.getUserName() + "\", \""
                 + user.getUserSurname() + "\", \""
                 + user.getBirthday() + "\", \""
@@ -115,14 +126,11 @@ public class Queries {
                 + user.getFlatNr() + "\", \""
                 + user.getPostCode() + "\", \""
                 + user.getCity() + "\", \""
-                + user.getGroup() + "\";";
-        rows = executeSQLQuery(query, settings);
-        
-        query = "INSERT INTO USERS VALUES ( \""
+                + user.getGroup() + "\",\""
                 + user.getEmail() + "\", \""
                 + user.getPass() + "\";";
+        rows = executeSQLQuery(query, settings,true);
         
-        rows = executeSQLQuery(query, settings);
         return success;
     }
     
@@ -143,14 +151,11 @@ public class Queries {
                 + user.getFlatNr() + "\", POSTCODE=\""
                 + user.getPostCode() + "\", CITY=\""
                 + user.getCity() + "\", GROUP=\""
-                + user.getGroup() + "\";";
-        rows = executeSQLQuery(query, settings);
-        
-        query = "UPDATE USERS SET ( LOGIN=\""
+                + user.getGroup() + "\", LOGIN=\""
                 + user.getEmail() + "\", PASSWORD=\""
-                + user.getPass() + "\";";
+                + user.getPass() + "\"";
         
-        rows = executeSQLQuery(query, settings);
+        rows = executeSQLQuery(query, settings,true);
         return success;
     }
     
@@ -162,17 +167,78 @@ public class Queries {
         LinkedList rows;
         settings = tools.readSettingsFromFile();
         
-        query = "DELETE FROM USERSDATA WHERE USERID="
+        query = "DELETE FROM USERSDATA WHERE ID="
                 + user.getIdUser() + ";";
-        rows = executeSQLQuery(query, settings);
-        
-        query = "UPDATE USERS SET ( LOGIN=\""
-                + user.getEmail() + "\", PASSWORD=\""
-                + user.getPass() + "\";";
-        
-        rows = executeSQLQuery(query, settings);
+        rows = executeSQLQuery(query, settings,true);
         return success;
     }
     
+    public boolean addBook(Book book, Tools tools) throws Exception
+    {
+        boolean success = false;
+        Settings settings;
+        String query;
+        LinkedList rows;
+        settings = tools.readSettingsFromFile();
+        
+        query = "INSERT INTO BOOKS (TITLE, NAME, SURNAME, ISLENT, LENDER, LENDDATE, BACKDATE, PUBLISHINGHOUSE, YEAR, NOTES) VALUES ( \""
+                + book.getTitle() + "\", \""
+                + book.getAuthorName() + "\", \""
+                + book.getAuthorSurname() + "\", 0, NULL, NULL, NULL, \""
+                + book.getPublishingHouse() + "\", \""
+                + book.getPublDate() + "\", \""
+                + book.getAttention() + "\");";
+        rows = executeSQLQuery(query, settings,true);
+        
+        return success;
+    }
     
+    public boolean updateBook(Book book, Tools tools) throws Exception
+    {
+        boolean success = false;
+        Settings settings;
+        String query;
+        LinkedList rows ;
+        settings = tools.readSettingsFromFile();
+        
+        query = "UPDATE BOOKS SET  TITLE=\""
+                + book.getTitle() + "\", NAME=\""
+                + book.getAuthorName() + "\", SURNAME=\""
+                + book.getAuthorSurname() + "\", PUBLISHINGHOUSE=\""
+                + book.getPublishingHouse() + "\", YEAR=\""
+                + book.getPublDate() + "\", NOTES=\""
+                + book.getAttention() + "\""
+                + " WHERE ID=" + book.getIdBook()+";";
+        rows = executeSQLQuery(query, settings,true);
+        
+        return success;
+    }
+    
+    public boolean rentBook(String book,String user, Tools tools) throws Exception
+    {
+        boolean success = false;
+        Settings settings;
+        String query;
+        LinkedList rows;
+        settings = tools.readSettingsFromFile();
+        
+        query = "UPDATE BOOKS SET ISLENT=1, LENDER=" + user + ", LENDDATE=CURDATE(), BACKDATE=CURDATE()+7 WHERE ID=" + book;
+        rows = executeSQLQuery(query, settings,true);
+        
+        return success;
+    }
+    
+    public boolean receiveBook(String book, Tools tools) throws Exception
+    {
+        boolean success = false;
+        Settings settings;
+        String query;
+        LinkedList rows;
+        settings = tools.readSettingsFromFile();
+        
+        query = "UPDATE BOOKS SET ISLENT=0, LENDER=null, LENDDATE=null, BACKDATE=null WHERE ID=" + book;
+        rows = executeSQLQuery(query, settings,true);
+        
+        return success;
+    }
 }

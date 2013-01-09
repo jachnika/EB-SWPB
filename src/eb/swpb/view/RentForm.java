@@ -16,26 +16,26 @@ public class RentForm extends javax.swing.JFrame {
     
     private JFrame frame;
     private JPanel jPanel1;
-    private javax.swing.JLabel RentAuthorLabel;
-    private javax.swing.JTextField RentBookIdTextField;
-    private javax.swing.JButton RentConfirmButton;
-    private javax.swing.JButton RentExitButton;
-    private javax.swing.JButton RentSearchBookButton;
-    private javax.swing.JLabel RentTitleLabel;
-    private javax.swing.JLabel RentUserBirthDateLabel;
-    private javax.swing.JLabel RentUserCityLabel;
-    private javax.swing.JTextField RentUserIdTextField;
-    private javax.swing.JLabel RentUserNameLabel;
-    private javax.swing.JLabel RentUserStreetLabel;
-    private javax.swing.JLabel RentUserSurnameLabel;
-    private javax.swing.JLabel RentYearLabel;
+    public javax.swing.JLabel RentAuthorLabel;
+    public javax.swing.JTextField RentBookIdTextField;
+    public javax.swing.JButton RentConfirmButton;
+    public javax.swing.JButton RentExitButton;
+    public javax.swing.JButton RentSearchBookButton;
+    public javax.swing.JLabel RentTitleLabel;
+    public javax.swing.JLabel RentUserBirthDateLabel;
+    public javax.swing.JLabel RentUserCityLabel;
+    public javax.swing.JTextField RentUserIdTextField;
+    public javax.swing.JLabel RentUserNameLabel;
+    public javax.swing.JLabel RentUserStreetLabel;
+    public javax.swing.JLabel RentUserSurnameLabel;
+    public javax.swing.JLabel RentYearLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     
-    private JFrame createFrom (ActionListener listener) {
+    public JFrame createFrom (ActionListener listener) {
 
         frame = new javax.swing.JFrame();
         jPanel1 = new javax.swing.JPanel();
@@ -75,6 +75,7 @@ public class RentForm extends javax.swing.JFrame {
         RentExitButton.setText("Wyjd¼");
 
         RentConfirmButton.setText("Zatwierd¼");
+        RentConfirmButton.addActionListener(listener);
 
         RentUserNameLabel.setText("Nazwisko: ");
 

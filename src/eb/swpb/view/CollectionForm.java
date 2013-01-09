@@ -5,6 +5,7 @@
 package eb.swpb.view;
 
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 import javax.swing.GroupLayout;
 import javax.swing.JFrame;
 import javax.swing.JButton;
@@ -13,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
+//import eb.swpb.model.*;
 /**
  *
  * @author jachnika
@@ -26,15 +28,16 @@ public class CollectionForm extends javax.swing.JFrame {
     public JButton CollectionReceiveBookButton;
     public JButton CollectionRemoveBookButton;
     public JButton CollectionRentBookButton;
-    public JButton CollectionSearchBookButton;
+    public JButton collectionSearchBookButton;
     private JLabel jLabel1;
     private JScrollPane jScrollPane1;
     private JSeparator jSeparator1;
-    private JTable jTable1;
+    public JTable jTable1;
     private JFrame frame;
     private JPanel jPanel1;
+    public javax.swing.table.DefaultTableModel model;
     
-    public JFrame CreateForm(ActionListener listener){
+    public JFrame CreateForm(ActionListener listener, LinkedList data){
         frame = new JFrame();
         frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         
@@ -47,48 +50,45 @@ public class CollectionForm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         CollectionRentBookButton = new javax.swing.JButton();
         CollectionReceiveBookButton = new javax.swing.JButton();
-        CollectionSearchBookButton = new javax.swing.JButton();
+        collectionSearchBookButton = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel1 = new JPanel();
         
         CollectionBackToModeChooserButton.setText("< Wróæ do wyboru trybu");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "ID", "Tytul", "Nazwisko", "Imiê", "Wypozyczone", "Wypozyczyl", "Data Wypo¿yczenia", "Data Zwrotu", "Wydawnictwo", "Rok", "Uwagi"
+        
+        model = new javax.swing.table.DefaultTableModel() 
+        {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                //Only the third column
+                return false;
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, true, false, false, true, true, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        };
+        //to jest gówniana czê¶æ programu. Tworzymy model jTable, okre¶lamy kolumny, nastêpnie trzeba rozpakowaæ linkedlist data
+        JTable table = new JTable(model);
+        model.addColumn("ID");
+        model.addColumn("Tytul");
+        model.addColumn("Nazwisko");
+        model.addColumn("Imie");
+        model.addColumn("Wypozyczone");
+        model.addColumn("Wypozyczyl");
+        model.addColumn("Data Wypo¿yczenia");
+        model.addColumn("Data Zwrotu");
+        model.addColumn("Wydawnictwo");
+        model.addColumn("Rok");
+        model.addColumn("Uwagi");
+        //no i tu jest to rozpakowanie LinkedListy z LinkedListy..... gówniane
+        for (int i = 0; i<data.size();i++){
+            LinkedList oneList = (LinkedList) data.get(i);
+            String[] row = new String[oneList.size()];
+            for(int j=0; j<oneList.size();j++){
+                 row[j]= (String) oneList.get(j); 
             }
-        });
+            model.addRow(row);
+        }
+        
+        jTable1.setModel(model);
+        
         jScrollPane1.setViewportView(jTable1);
         jTable1.getColumnModel().getColumn(0).setResizable(false);
         jTable1.getColumnModel().getColumn(1).setResizable(false);
@@ -102,11 +102,13 @@ public class CollectionForm extends javax.swing.JFrame {
         jTable1.getColumnModel().getColumn(10).setResizable(false);
 
         CollectionModifyBookButton.setText("Modyfikuj");
+        CollectionModifyBookButton.addActionListener(listener);
 
         CollectionRemoveBookButton.setText("Usuñ");
 
         CollectionAddBookButton.setText("Dodaj");
-
+        CollectionAddBookButton.addActionListener(listener);
+        
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel1.setText("Zarz±dzanie zbiorem");
 
@@ -117,7 +119,9 @@ public class CollectionForm extends javax.swing.JFrame {
         CollectionReceiveBookButton.addActionListener(listener);
            
 
-        CollectionSearchBookButton.setText("Wyszukaj");
+        collectionSearchBookButton.setText("Wyszukaj");
+        collectionSearchBookButton.addActionListener(listener);
+       
         GroupLayout layout = new GroupLayout(jPanel1);
         //org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         jPanel1.setLayout(layout);
@@ -139,7 +143,7 @@ public class CollectionForm extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(CollectionSearchBookButton)
+                                .addComponent(collectionSearchBookButton)
                                 .addGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .addComponent(CollectionAddBookButton)
                                 .addGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -169,7 +173,7 @@ public class CollectionForm extends javax.swing.JFrame {
                     .addComponent(CollectionModifyBookButton)
                     .addComponent(CollectionRemoveBookButton)
                     .addComponent(CollectionAddBookButton)
-                    .addComponent(CollectionSearchBookButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(collectionSearchBookButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         frame.getContentPane().add(jPanel1);

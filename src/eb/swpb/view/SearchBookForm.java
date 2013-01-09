@@ -16,17 +16,17 @@ public class SearchBookForm extends javax.swing.JFrame {
     
     private JFrame frame;
     private JPanel jPanel1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox jComboBox1;
+    public javax.swing.JButton jButton1;
+    public javax.swing.JButton jButton2;
+    public javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
+    public javax.swing.JTextField jTextField1;
     
-    private JFrame createFrom (ActionListener listener) {
+    public JFrame createFrom (ActionListener listener) {
 
         frame = new javax.swing.JFrame();
         jPanel1 = new javax.swing.JPanel();
@@ -45,7 +45,7 @@ public class SearchBookForm extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel1.setText("Wyszukiwanie");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ID", "Autora", "Tytu³u", " " }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ID", "NAME", "SURNAME", "TITLE","ISRENT", "" }));
 
         jLabel2.setText("Wed³ug");
 
@@ -54,12 +54,13 @@ public class SearchBookForm extends javax.swing.JFrame {
         jLabel4.setText("Znak \"%\" jest uznawany za dowolny ci±g znaków");
 
         jButton1.setText("Szukaj");
+        jButton1.addActionListener(listener);
 
         jButton2.setText("Wyjd¼");
         jButton2.addActionListener(listener);
 
-        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(jPanel1);
+        jPanel1.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
@@ -113,8 +114,9 @@ public class SearchBookForm extends javax.swing.JFrame {
         );
 
         frame.getContentPane().add(jPanel1);
-        frame.pack();
-        frame.setVisible(true);
-        return frame;
-    }
+		frame.pack();
+		frame.setVisible(true);
+                
+                return frame;
+    }// </editor-fold>                        
 }

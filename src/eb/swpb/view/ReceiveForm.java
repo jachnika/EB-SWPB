@@ -16,23 +16,23 @@ public class ReceiveForm extends javax.swing.JFrame{
     
     private JFrame frame;
     private JPanel jPanel1;
-    private javax.swing.JLabel ReceiveAuthorLabel;
-    private javax.swing.JTextField ReceiveBookIdTexField;
-    private javax.swing.JButton ReceiveConfirmButton;
-    private javax.swing.JButton ReceiveExitButton;
-    private javax.swing.JLabel ReceiveNameLabel;
-    private javax.swing.JButton ReceiveSearchButton;
-    private javax.swing.JLabel ReceiveSurnameLabel;
-    private javax.swing.JLabel ReceiveTitleLabel;
-    private javax.swing.JLabel ReceiveUserIdLabel;
-    private javax.swing.JLabel ReceiveYearLabel;
+    public javax.swing.JLabel ReceiveAuthorLabel;
+    public javax.swing.JTextField ReceiveBookIdTexField;
+    public javax.swing.JButton ReceiveConfirmButton;
+    public javax.swing.JButton ReceiveExitButton;
+    public javax.swing.JLabel ReceiveNameLabel;
+    public javax.swing.JButton ReceiveSearchButton;
+    public javax.swing.JLabel ReceiveSurnameLabel;
+    public javax.swing.JLabel ReceiveTitleLabel;
+    public javax.swing.JLabel ReceiveUserIdLabel;
+    public javax.swing.JLabel ReceiveYearLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField jTextField6;
     
-    private JFrame createFrom (ActionListener listener) {
+   public JFrame createFrom (ActionListener listener) {
 
         frame = new javax.swing.JFrame();
         jPanel1 = new javax.swing.JPanel();
@@ -74,13 +74,15 @@ public class ReceiveForm extends javax.swing.JFrame{
         ReceiveSurnameLabel.setText("Imiê");
 
         ReceiveConfirmButton.setText("Zatwierd¼");
-
+        ReceiveConfirmButton.addActionListener(listener);
+        
         ReceiveExitButton.setText("Wyjd¼");
 
         ReceiveSearchButton.setText("Wyszukaj");
+        ReceiveSearchButton.addActionListener(listener);
 
-        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(jPanel1);
+        jPanel1.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
