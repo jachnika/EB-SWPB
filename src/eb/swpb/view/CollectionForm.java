@@ -105,6 +105,7 @@ public class CollectionForm extends javax.swing.JFrame {
         CollectionModifyBookButton.addActionListener(listener);
 
         CollectionRemoveBookButton.setText("Usuñ");
+        CollectionRemoveBookButton.addActionListener(listener);
 
         CollectionAddBookButton.setText("Dodaj");
         CollectionAddBookButton.addActionListener(listener);

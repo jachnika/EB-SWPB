@@ -5,6 +5,7 @@
 package eb.swpb.view;
 
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 import javax.swing.JFrame;
 
 /**
@@ -15,22 +16,22 @@ public class EditUserForm extends javax.swing.JFrame{
     
     private javax.swing.JFrame frame;
     private javax.swing.JPanel panel;
-    private javax.swing.JTextField UserCityTextField;
-    private javax.swing.JTextField UserDayBirthTextField;
-    private javax.swing.JTextField UserFlatTextField;
-    private javax.swing.JTextField UserHouseTextField;
-    private javax.swing.JTextField UserIdTextField;
-    private javax.swing.JTextField UserMonthBirthTextField;
-    private javax.swing.JTextField UserNameTextField;
-    private javax.swing.JTextArea UserNotesTextArea;
-    private javax.swing.JTextField UserPostCodFirstTextField;
-    private javax.swing.JTextField UserPostCodeSecondTextField;
-    private javax.swing.JTextField UserStreetTextField;
-    private javax.swing.JTextField UserSurnameTextField;
-    private javax.swing.JTextField UsersYearBirthTextField;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox jComboBox1;
+    public javax.swing.JTextField UserCityTextField;
+    public javax.swing.JTextField UserDayBirthTextField;
+    public javax.swing.JTextField UserFlatTextField;
+    public javax.swing.JTextField UserHouseTextField;
+    public javax.swing.JTextField UserIdTextField;
+    public javax.swing.JTextField UserMonthBirthTextField;
+    public javax.swing.JTextField UserNameTextField;
+    public javax.swing.JTextArea UserNotesTextArea;
+    public javax.swing.JTextField UserPostCodFirstTextField;
+    public javax.swing.JTextField UserPostCodeSecondTextField;
+    public javax.swing.JTextField UserStreetTextField;
+    public javax.swing.JTextField UserSurnameTextField;
+    public javax.swing.JTextField UsersYearBirthTextField;
+    public javax.swing.JButton jButton1;
+    public javax.swing.JButton jButton2;
+    public javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -48,8 +49,9 @@ public class EditUserForm extends javax.swing.JFrame{
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    public boolean isNew = true;
     
-    public JFrame CreateForm(ActionListener listener) {
+    public JFrame CreateForm(ActionListener listener, LinkedList data) {
 
         frame = new JFrame();
         panel = new javax.swing.JPanel();
@@ -135,17 +137,44 @@ public class EditUserForm extends javax.swing.JFrame{
         jScrollPane1.setViewportView(UserNotesTextArea);
 
         jButton1.setText("Zatwierd¼");
+        jButton1.addActionListener(listener);
 
         jButton2.setText("Wyjd¼");
         jButton2.addActionListener(listener);
 
         jLabel15.setText("Grupa");
-
+        
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Administratorzy", "Bibliotekarze", "Czytelnicy" }));
-        jComboBox1.setSelectedIndex(2);
+        
 
-        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        if(data!=null)
+        {
+            isNew = false;
+            for (int i = 0; i<data.size();i++)
+            {
+                LinkedList oneList = (LinkedList) data.get(i);
+                String row = new String();
+                int j = 0;
+                    UserIdTextField.setText((String) oneList.get(j)); j++;
+                    UserNameTextField.setText((String) oneList.get(j)); j++;
+                    UserSurnameTextField.setText((String) oneList.get(j)); j++;
+                    UsersYearBirthTextField.setText((String) oneList.get(j)); j++;
+                    UserStreetTextField.setText((String) oneList.get(j)); j++;
+                    UserHouseTextField.setText((String) oneList.get(j)); j++;
+                    UserFlatTextField.setText((String) oneList.get(j));j++;
+                    UserPostCodFirstTextField.setText((String) oneList.get(j)); j++;
+                    UserCityTextField.setText((String) oneList.get(j)); j++;
+                    //jComboBox1.setSelectedItem(oneList.get(j));
+                    jComboBox1.setSelectedIndex(Integer.parseInt(oneList.get(j).toString()));
+                
+            }
+        }
+        else
+        {
+            jComboBox1.setSelectedIndex(2);
+        }
+        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(panel);
+        panel.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()

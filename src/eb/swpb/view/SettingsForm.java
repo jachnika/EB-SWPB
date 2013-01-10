@@ -4,6 +4,7 @@
  */
 package eb.swpb.view;
 
+import eb.swpb.model.Settings;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
@@ -14,12 +15,12 @@ import javax.swing.JFrame;
 public class SettingsForm extends javax.swing.JFrame {
     private javax.swing.JFrame frame;
     private javax.swing.JPanel panel;
-    private javax.swing.JButton SettingsConfirmButton;
-    private javax.swing.JButton SettingsExitButton;
-    private javax.swing.JPasswordField SettingsPassPasswordField;
-    private javax.swing.JTextField SettingsPortTextField;
-    private javax.swing.JTextField SettingsServerAddressTextField;
-    private javax.swing.JTextField SettingsUserTextField;
+    public javax.swing.JButton SettingsConfirmButton;
+    public javax.swing.JButton SettingsExitButton;
+    public javax.swing.JPasswordField SettingsPassPasswordField;
+    public javax.swing.JTextField SettingsPortTextField;
+    public javax.swing.JTextField SettingsServerAddressTextField;
+    public javax.swing.JTextField SettingsUserTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -27,7 +28,7 @@ public class SettingsForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JSeparator jSeparator1;
     
-    public JFrame CreateForm(ActionListener listener) {
+    public JFrame CreateForm(ActionListener listener, Settings settings) {
         frame = new javax.swing.JFrame();
         panel = new javax.swing.JPanel();
         
@@ -53,6 +54,11 @@ public class SettingsForm extends javax.swing.JFrame {
         jLabel3.setText("SQL Password");
 
         jLabel4.setText("Port");
+        
+        SettingsServerAddressTextField.setText(settings.getSqlAddr());
+        SettingsPortTextField.setText(Integer.toString(settings.getPort()));
+        SettingsUserTextField.setText(settings.getUser());
+        SettingsPassPasswordField.setText(settings.getPassword());
 
         SettingsConfirmButton.setText("Zatwierd¼");
         SettingsConfirmButton.addActionListener(listener);

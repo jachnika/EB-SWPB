@@ -4,14 +4,12 @@
  */
 package eb.swpb.model;
 
-import java.awt.Component;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -51,15 +49,19 @@ public class Queries {
                     }
                     rows.add(columns);
                 }
+                connect.close();
+                statement.close();
+                resultSet.close();
             }
             else
             {
-                rowIter = statement.executeUpdate(query);
+                rows = null;
+                statement.executeUpdate(query);
+                connect.close();
+                statement.close();
             }
             
-            connect.close();
-            statement.close();
-            resultSet.close();
+            
             return rows;
         } catch (ClassNotFoundException | SQLException e) {
             throw e;
@@ -102,7 +104,7 @@ public class Queries {
         String query;
         LinkedList rows;
         
-        query = "SELECT * FROM "+whichObjectDoYouLookingFor+" WHERE " + whereDoYouLookingFor + " LIKE \"" + whatDoYouLookingFor + "\"";
+        query = "SELECT * FROM "+whichObjectDoYouLookingFor+" WHERE " + whereDoYouLookingFor + " LIKE \"" + whatDoYouLookingFor + "\" ORDER BY ID ASC";
         settings = tools.readSettingsFromFile();
         rows = executeSQLQuery(query, settings,false);
        
@@ -114,10 +116,10 @@ public class Queries {
         boolean success = false;
         Settings settings;
         String query;
-        LinkedList rows;
+        
         settings = tools.readSettingsFromFile();
         
-        query = "INSERT INTO USERS VALUES ( \""
+        query = "INSERT INTO USERS (`NAME`, `SURNAME`, `BIRTH`, `STREET`, `HOUSE`, `FLAT`, `POSTCODE`, `CITY`, `GROUP`, `EMAIL`, `PASSWORD`) VALUES ( \""
                 + user.getUserName() + "\", \""
                 + user.getUserSurname() + "\", \""
                 + user.getBirthday() + "\", \""
@@ -128,8 +130,8 @@ public class Queries {
                 + user.getCity() + "\", \""
                 + user.getGroup() + "\",\""
                 + user.getEmail() + "\", \""
-                + user.getPass() + "\";";
-        rows = executeSQLQuery(query, settings,true);
+                + user.getPass() + "\");";
+        executeSQLQuery(query, settings,true);
         
         return success;
     }
@@ -159,7 +161,7 @@ public class Queries {
         return success;
     }
     
-    public boolean deleteUser(User user, Tools tools) throws Exception
+    public boolean deleteUser(String user, Tools tools) throws Exception
     {
         boolean success = false;
         Settings settings;
@@ -167,8 +169,8 @@ public class Queries {
         LinkedList rows;
         settings = tools.readSettingsFromFile();
         
-        query = "DELETE FROM USERSDATA WHERE ID="
-                + user.getIdUser() + ";";
+        query = "DELETE FROM USERS WHERE ID="
+                + user + ";";
         rows = executeSQLQuery(query, settings,true);
         return success;
     }
@@ -238,6 +240,20 @@ public class Queries {
         
         query = "UPDATE BOOKS SET ISLENT=0, LENDER=null, LENDDATE=null, BACKDATE=null WHERE ID=" + book;
         rows = executeSQLQuery(query, settings,true);
+        
+        return success;
+    }
+    
+    public boolean deleteBook(String id, Tools tools) throws Exception
+    {
+        boolean success = false;
+        Settings settings;
+        String query;
+        
+        settings = tools.readSettingsFromFile();
+        
+        query = "DELETE FROM BOOKS WHERE ID="+id;
+        executeSQLQuery(query, settings, true);
         
         return success;
     }

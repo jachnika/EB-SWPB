@@ -11,30 +11,30 @@ import java.util.Date;
  * @author jachnika
  */
 public class User {
-    private int idUser;
+    private String idUser;
     private String userName;
     private String userSurname;
-    private Date birthday;
+    private String birthday;
     private String street;
-    private int houseNr;
-    private int flatNr;
+    private String houseNr;
+    private String flatNr;
     private String postCode;
     private String city;
-    private int group;
+    private String group;
     private String email;
     private String pass;
 
     /**
      * @return the idUser
      */
-    public int getIdUser() {
+    public String getIdUser() {
         return idUser;
     }
 
     /**
      * @param idUser the idUser to set
      */
-    public void setIdUser(int idUser) {
+    public void setIdUser(String idUser) {
         this.idUser = idUser;
     }
 
@@ -69,14 +69,14 @@ public class User {
     /**
      * @return the birthday
      */
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
     /**
      * @param birthday the birthday to set
      */
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
@@ -97,28 +97,28 @@ public class User {
     /**
      * @return the houseNr
      */
-    public int getHouseNr() {
+    public String getHouseNr() {
         return houseNr;
     }
 
     /**
      * @param houseNr the houseNr to set
      */
-    public void setHouseNr(int houseNr) {
+    public void setHouseNr(String houseNr) {
         this.houseNr = houseNr;
     }
 
     /**
      * @return the flatNr
      */
-    public int getFlatNr() {
+    public String getFlatNr() {
         return flatNr;
     }
 
     /**
      * @param flatNr the flatNr to set
      */
-    public void setFlatNr(int flatNr) {
+    public void setFlatNr(String flatNr) {
         this.flatNr = flatNr;
     }
 
@@ -153,14 +153,14 @@ public class User {
     /**
      * @return the group
      */
-    public int getGroup() {
+    public String getGroup() {
         return group;
     }
 
     /**
      * @param group the group to set
      */
-    public void setGroup(int group) {
+    public void setGroup(String group) {
         this.group = group;
     }
 
@@ -191,5 +191,7 @@ public class User {
     public void setPass(String pass) {
         this.pass = pass;
     }
+
+    
     
 }
