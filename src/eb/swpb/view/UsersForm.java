@@ -86,6 +86,7 @@ public class UsersForm extends javax.swing.JFrame {
         jTable1.getColumnModel().getColumn(8).setResizable(false);
 
         UsersBackToModeChooserButton.setText("< Wróæ do wyboru trybu");
+        UsersBackToModeChooserButton.addActionListener(listener);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel1.setText("Zarz±dzanie u¿ytkownikami");

@@ -107,7 +107,10 @@ public class Logic implements ActionListener {
             }
             //success.toArray(data);
             frame = usersForm.CreateForm(this, success);
-        } else if (e.getSource() == modeForm.settingsButton) {
+        } else if (e.getSource() == modeForm.exitButton){
+            System.exit(0);
+        }
+        else if (e.getSource() == modeForm.settingsButton) {
             settingsForm = new SettingsForm();
             frame.setVisible(false);
             Settings settings = new Settings();
@@ -146,7 +149,12 @@ public class Logic implements ActionListener {
             receiveForm = new ReceiveForm();
             frame.setVisible(false);
             frame = receiveForm.createFrom(this);
-        } /**
+        } else if (e.getSource() == collectionForm.CollectionBackToModeChooserButton){
+            modeForm = new ModeForm();
+            frame.setVisible(false);
+            frame = modeForm.CreateForm(this);
+        }
+        /**
          * Przyciski SEARCHBOOKFORM
          */
         else if (e.getSource() == searchBookForm.jButton1) {
@@ -180,7 +188,19 @@ public class Logic implements ActionListener {
             }
             //success.toArray(data);
             frame = collectionForm.CreateForm(this, success);
-        } /**
+        } else if (e.getSource() == searchBookForm.jButton2)
+        {
+            LinkedList success = null;
+            collectionForm = new CollectionForm();
+            frame.setVisible(false);
+            try {
+                success = queries.search("%", "ID", "BOOKS", tools);
+            } catch (Exception ex) {
+                Logger.getLogger(Logic.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            frame = collectionForm.CreateForm(this, success);
+        }
+            /**
          * Przyciski EDITBOOKFORM
          */
         else if (e.getSource() == editBookForm.BookConfirmChangeButton) {
@@ -215,8 +235,18 @@ public class Logic implements ActionListener {
             collectionForm = new CollectionForm();
             frame.setVisible(false);
             frame = collectionForm.CreateForm(this, success2);
-
-        } /*
+        } else if (e.getSource() == editBookForm.BookExitButton){
+            LinkedList success2 = null;
+            try {
+                success2 = queries.search("%", "ID", "BOOKS", tools);
+            } catch (Exception ex) {
+                Logger.getLogger(Logic.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            collectionForm = new CollectionForm();
+            frame.setVisible(false);
+            frame = collectionForm.CreateForm(this, success2);
+        }
+        /*
          * Przyciski RENTFORM
          */ else if (e.getSource() == rentForm.RentSearchBookButton) {
             LinkedList resultUser = null;
@@ -305,7 +335,6 @@ public class Logic implements ActionListener {
             } catch (Exception ex) {
                 Logger.getLogger(Logic.class.getName()).log(Level.SEVERE, null, ex);
             }
-            //success.toArray(data);
             javax.swing.table.DefaultTableModel model;//to jest gówniana czê¶æ programu. Tworzymy model jTable, okre¶lamy kolumny, nastêpnie trzeba rozpakowaæ linkedlist data
             model = new javax.swing.table.DefaultTableModel() {
                 @Override
@@ -378,8 +407,11 @@ public class Logic implements ActionListener {
             } catch (Exception ex) {
                 Logger.getLogger(Logic.class.getName()).log(Level.SEVERE, null, ex);
             }
-            //success.toArray(data);
             frame = usersForm.CreateForm(this, success);
+        } else if (e.getSource() == usersForm.UsersBackToModeChooserButton) {
+            modeForm = new ModeForm();
+            frame.setVisible(false);
+            frame = modeForm.CreateForm(this);
         }/**
          * Przyciski EDITUSERFORM
          */
@@ -421,7 +453,19 @@ public class Logic implements ActionListener {
             frame.setVisible(false);
             frame = usersForm.CreateForm(this, success2);
 
-        } /**
+        } else if(e.getSource() == editUserForm.jButton2)
+        {
+            LinkedList success2 = null;
+            try {
+                success2 = queries.search("%", "ID", "USERS", tools);
+            } catch (Exception ex) {
+                Logger.getLogger(Logic.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            usersForm = new UsersForm();
+            frame.setVisible(false);
+            frame = usersForm.CreateForm(this, success2);
+        }
+        /**
          * PRZYCISKI SEARCHUSERFORM
          */
         else if (e.getSource() == searchUserForm.jButton1) {
@@ -436,7 +480,18 @@ public class Logic implements ActionListener {
             usersForm = new UsersForm();
             frame.setVisible(false);
             frame = usersForm.CreateForm(this, success);
-        } /**
+        } else if (e.getSource() == searchUserForm.jButton2)
+        {
+            LinkedList success2 = null;
+            try {
+                success2 = queries.search("%", "ID", "USERS", tools);
+            } catch (Exception ex) {
+                Logger.getLogger(Logic.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            usersForm = new UsersForm();
+            frame.setVisible(false);
+            frame = usersForm.CreateForm(this, success2);
+        }/**
          * Przyciski SETTINGSFORM
          */
         else if (e.getSource() == settingsForm.SettingsConfirmButton) {
@@ -450,6 +505,12 @@ public class Logic implements ActionListener {
             } catch (Exception ex) {
                 Logger.getLogger(Logic.class.getName()).log(Level.SEVERE, null, ex);
             }
+            modeForm = new ModeForm();
+            frame.setVisible(false);
+            frame = modeForm.CreateForm(this);
+        }
+        else if(e.getSource()==settingsForm.SettingsExitButton)
+        {
             modeForm = new ModeForm();
             frame.setVisible(false);
             frame = modeForm.CreateForm(this);

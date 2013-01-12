@@ -55,6 +55,7 @@ public class CollectionForm extends javax.swing.JFrame {
         jPanel1 = new JPanel();
         
         CollectionBackToModeChooserButton.setText("< Wróæ do wyboru trybu");
+        CollectionBackToModeChooserButton.addActionListener(listener);
         
         model = new javax.swing.table.DefaultTableModel() 
         {

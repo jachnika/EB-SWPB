@@ -7,7 +7,6 @@ package eb.swpb.view;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import javax.swing.JFrame;
-import org.jdesktop.layout.GroupLayout;
 
 /**
  *
@@ -21,7 +20,7 @@ public class EditBookForm extends javax.swing.JFrame{
     public javax.swing.JTextField BookAuthorTextField;
     public javax.swing.JTextField BookAuthorTextField1;
     public javax.swing.JButton BookConfirmChangeButton;
-    private javax.swing.JButton BookExitButton;
+    public javax.swing.JButton BookExitButton;
     public javax.swing.JTextField BookPublishingHouseTextField;
     public javax.swing.JTextField BookTitleTextField;
     public javax.swing.JTextField BookYearTextField;

@@ -25,7 +25,7 @@ public class ModeForm extends javax.swing.JFrame{
     public JButton collectionButton;
     public JButton usersButton;
     public JButton settingsButton;
-    private JButton exitButton;
+    public JButton exitButton;
     private JSeparator jSeparator1;
     private JSeparator jSeparator2;
     

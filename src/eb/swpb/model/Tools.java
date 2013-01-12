@@ -87,7 +87,7 @@ public class Tools{
             try (PrintWriter out = new PrintWriter(outFile)) {
                 out.println(settings.getSqlAddr());
                 out.println(settings.getPort());
-                out.print(settings.getUser());
+                out.println(settings.getUser());
                 out.println(settings.getPassword());
                 success=true;
             }
