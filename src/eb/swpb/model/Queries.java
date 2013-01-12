@@ -124,8 +124,8 @@ public class Queries {
                 + user.getUserSurname() + "\", \""
                 + user.getBirthday() + "\", \""
                 + user.getStreet() + "\", \""
-                + user.getHouseNr() + "\", \""
-                + user.getFlatNr() + "\", \""
+                + user.getHouseNr() + "\", "
+                + user.getFlatNr() + ", \""
                 + user.getPostCode() + "\", \""
                 + user.getCity() + "\", \""
                 + user.getGroup() + "\",\""
@@ -144,18 +144,19 @@ public class Queries {
         LinkedList rows;
         settings = tools.readSettingsFromFile();
         
-        query = "UPDATE USERSDATA SET ( NAME=\""
+        query = "UPDATE USERS SET NAME=\""
                 + user.getUserName() + "\", SURNAME=\""
-                + user.getUserSurname() + "\", BIRTHDAY=\""
+                + user.getUserSurname() + "\", BIRTH=\""
                 + user.getBirthday() + "\", STREET=\""
-                + user.getStreet() + "\", HOUSENR=\""
-                + user.getHouseNr() + "\", FLATNR=\""
-                + user.getFlatNr() + "\", POSTCODE=\""
+                + user.getStreet() + "\", HOUSE=\""
+                + user.getHouseNr() + "\", FLAT="
+                + user.getFlatNr() + ", POSTCODE=\""
                 + user.getPostCode() + "\", CITY=\""
-                + user.getCity() + "\", GROUP=\""
-                + user.getGroup() + "\", LOGIN=\""
+                + user.getCity() + "\", `GROUP`="
+                + user.getGroup() + ", EMAIL=\""
                 + user.getEmail() + "\", PASSWORD=\""
-                + user.getPass() + "\"";
+                + user.getPass() + "\""
+                + " WHERE ID="+user.getIdUser();
         
         rows = executeSQLQuery(query, settings,true);
         return success;

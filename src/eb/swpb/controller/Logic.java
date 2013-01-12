@@ -107,10 +107,9 @@ public class Logic implements ActionListener {
             }
             //success.toArray(data);
             frame = usersForm.CreateForm(this, success);
-        } else if (e.getSource() == modeForm.exitButton){
+        } else if (e.getSource() == modeForm.exitButton) {
             System.exit(0);
-        }
-        else if (e.getSource() == modeForm.settingsButton) {
+        } else if (e.getSource() == modeForm.settingsButton) {
             settingsForm = new SettingsForm();
             frame.setVisible(false);
             Settings settings = new Settings();
@@ -149,12 +148,11 @@ public class Logic implements ActionListener {
             receiveForm = new ReceiveForm();
             frame.setVisible(false);
             frame = receiveForm.createFrom(this);
-        } else if (e.getSource() == collectionForm.CollectionBackToModeChooserButton){
+        } else if (e.getSource() == collectionForm.CollectionBackToModeChooserButton) {
             modeForm = new ModeForm();
             frame.setVisible(false);
             frame = modeForm.CreateForm(this);
-        }
-        /**
+        } /**
          * Przyciski SEARCHBOOKFORM
          */
         else if (e.getSource() == searchBookForm.jButton1) {
@@ -188,8 +186,7 @@ public class Logic implements ActionListener {
             }
             //success.toArray(data);
             frame = collectionForm.CreateForm(this, success);
-        } else if (e.getSource() == searchBookForm.jButton2)
-        {
+        } else if (e.getSource() == searchBookForm.jButton2) {
             LinkedList success = null;
             collectionForm = new CollectionForm();
             frame.setVisible(false);
@@ -199,43 +196,47 @@ public class Logic implements ActionListener {
                 Logger.getLogger(Logic.class.getName()).log(Level.SEVERE, null, ex);
             }
             frame = collectionForm.CreateForm(this, success);
-        }
-            /**
+        } /**
          * Przyciski EDITBOOKFORM
          */
         else if (e.getSource() == editBookForm.BookConfirmChangeButton) {
-            Book book = new Book();
-            book.setIdBook(editBookForm.jTextField1.getText());
-            book.setTitle(editBookForm.BookTitleTextField.getText());
-            book.setAuthorName(editBookForm.BookAuthorTextField.getText());
-            book.setAuthorSurname(editBookForm.BookAuthorTextField1.getText());
-            book.setPublishingHouse(editBookForm.BookPublishingHouseTextField.getText());
-            book.setPublDate(editBookForm.BookYearTextField.getText());
-            book.setAttention(editBookForm.BookAdditionalInformTextArea.getText());
-            boolean success;
-            LinkedList success2 = null;
-            if (editBookForm.isNew == true) {
+            boolean correctYear = tools.isYear(editBookForm.BookYearTextField.getText());
+            if (correctYear == true) {
+                Book book = new Book();
+                book.setIdBook(editBookForm.jTextField1.getText());
+                book.setTitle(editBookForm.BookTitleTextField.getText());
+                book.setAuthorName(editBookForm.BookAuthorTextField.getText());
+                book.setAuthorSurname(editBookForm.BookAuthorTextField1.getText());
+                book.setPublishingHouse(editBookForm.BookPublishingHouseTextField.getText());
+                book.setPublDate(editBookForm.BookYearTextField.getText());
+                book.setAttention(editBookForm.BookAdditionalInformTextArea.getText());
+                boolean success;
+                LinkedList success2 = null;
+                if (editBookForm.isNew == true) {
+                    try {
+                        success = queries.addBook(book, tools);
+                    } catch (Exception ex) {
+                        Logger.getLogger(Logic.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    try {
+                        success = queries.updateBook(book, tools);
+                    } catch (Exception ex) {
+                        Logger.getLogger(Logic.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 try {
-                    success = queries.addBook(book, tools);
+                    success2 = queries.search("%", "ID", "BOOKS", tools);
                 } catch (Exception ex) {
                     Logger.getLogger(Logic.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                collectionForm = new CollectionForm();
+                frame.setVisible(false);
+                frame = collectionForm.CreateForm(this, success2);
             } else {
-                try {
-                    success = queries.updateBook(book, tools);
-                } catch (Exception ex) {
-                    Logger.getLogger(Logic.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                System.out.println("B³±d");
             }
-            try {
-                success2 = queries.search("%", "ID", "BOOKS", tools);
-            } catch (Exception ex) {
-                Logger.getLogger(Logic.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            collectionForm = new CollectionForm();
-            frame.setVisible(false);
-            frame = collectionForm.CreateForm(this, success2);
-        } else if (e.getSource() == editBookForm.BookExitButton){
+        } else if (e.getSource() == editBookForm.BookExitButton) {
             LinkedList success2 = null;
             try {
                 success2 = queries.search("%", "ID", "BOOKS", tools);
@@ -245,8 +246,7 @@ public class Logic implements ActionListener {
             collectionForm = new CollectionForm();
             frame.setVisible(false);
             frame = collectionForm.CreateForm(this, success2);
-        }
-        /*
+        } /*
          * Przyciski RENTFORM
          */ else if (e.getSource() == rentForm.RentSearchBookButton) {
             LinkedList resultUser = null;
@@ -417,44 +417,67 @@ public class Logic implements ActionListener {
          */
         else if (e.getSource() == editUserForm.jButton1) {
             User user = new User();
-            user.setIdUser(editUserForm.UserIdTextField.getText());
-            user.setUserName(editUserForm.UserNameTextField.getText());
-            user.setUserSurname(editUserForm.UserSurnameTextField.getText());
-            user.setBirthday("2000-02-04");
-            user.setStreet(editUserForm.UserStreetTextField.getText());
-            user.setHouseNr(editUserForm.UserHouseTextField.getText());
-            user.setFlatNr(editUserForm.UserFlatTextField.getText());
-            user.setPostCode(editUserForm.UserFlatTextField.getText());
-            user.setCity(editUserForm.UserCityTextField.getText());
-            user.setGroup(Integer.toString(editUserForm.jComboBox1.getSelectedIndex()));
-            user.setEmail("cokolwiek");
-            user.setPass("12345678");
-            boolean success;
-            LinkedList success2 = null;
-            if (editBookForm.isNew == true) {
-                try {
-                    success = queries.addUser(user, tools);
-                } catch (Exception ex) {
-                    Logger.getLogger(Logic.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } else {
-                try {
-                    success = queries.updateUser(user, tools);
-                } catch (Exception ex) {
-                    Logger.getLogger(Logic.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            try {
-                success2 = queries.search("%", "ID", "USERS", tools);
-            } catch (Exception ex) {
-                Logger.getLogger(Logic.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            usersForm = new UsersForm();
-            frame.setVisible(false);
-            frame = usersForm.CreateForm(this, success2);
+            boolean correctDay, correctMonth, correctYear, correctPostCode;
+            String flat;
+            correctDay = tools.isDay(editUserForm.UserDayBirthTextField.getText());
+            correctMonth = tools.isMonth(editUserForm.UserMonthBirthTextField.getText());
+            correctYear = tools.isYear(editUserForm.UsersYearBirthTextField.getText());
+            correctPostCode = tools.isPostCode(editUserForm.UserPostCodFirstTextField.getText(), editUserForm.UserPostCodeSecondTextField.getText());
 
-        } else if(e.getSource() == editUserForm.jButton2)
-        {
+            if (correctDay == true && correctMonth == true && correctYear == true && correctPostCode == true) {
+                user.setIdUser(editUserForm.UserIdTextField.getText());
+                user.setUserName(editUserForm.UserNameTextField.getText());
+                user.setUserSurname(editUserForm.UserSurnameTextField.getText());
+                user.setBirthday(editUserForm.UsersYearBirthTextField.getText() + "-" + editUserForm.UserMonthBirthTextField.getText() + "-" + editUserForm.UserDayBirthTextField.getText());
+                user.setStreet(editUserForm.UserStreetTextField.getText());
+                user.setHouseNr(editUserForm.UserHouseTextField.getText());
+                flat = editUserForm.UserFlatTextField.getText();
+                if (flat.isEmpty()) {
+                    user.setFlatNr("NULL");
+                } else {
+                    user.setFlatNr(editUserForm.UserFlatTextField.getText());
+                }
+
+                user.setPostCode(editUserForm.UserPostCodFirstTextField.getText() + "-" + editUserForm.UserPostCodeSecondTextField.getText());
+                user.setCity(editUserForm.UserCityTextField.getText());
+                user.setGroup(Integer.toString(editUserForm.jComboBox1.getSelectedIndex()));
+                user.setEmail(editUserForm.emailTextBox.getText());
+
+                if (editUserForm.resetPassword.isSelected()) {
+                    user.setPass("123456789");
+                } else {
+                    user.setPass(editUserForm.pass);
+                }
+
+
+                boolean success;
+                LinkedList success2 = null;
+                if (editUserForm.isNew == true) {
+                    try {
+                        success = queries.addUser(user, tools);
+                    } catch (Exception ex) {
+                        Logger.getLogger(Logic.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    try {
+                        success = queries.updateUser(user, tools);
+                    } catch (Exception ex) {
+                        Logger.getLogger(Logic.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                try {
+                    success2 = queries.search("%", "ID", "USERS", tools);
+                } catch (Exception ex) {
+                    Logger.getLogger(Logic.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                usersForm = new UsersForm();
+                frame.setVisible(false);
+                frame = usersForm.CreateForm(this, success2);
+            } else {
+                System.out.println("B³±d");
+            }
+
+        } else if (e.getSource() == e) {
             LinkedList success2 = null;
             try {
                 success2 = queries.search("%", "ID", "USERS", tools);
@@ -464,8 +487,7 @@ public class Logic implements ActionListener {
             usersForm = new UsersForm();
             frame.setVisible(false);
             frame = usersForm.CreateForm(this, success2);
-        }
-        /**
+        } /**
          * PRZYCISKI SEARCHUSERFORM
          */
         else if (e.getSource() == searchUserForm.jButton1) {
@@ -480,8 +502,7 @@ public class Logic implements ActionListener {
             usersForm = new UsersForm();
             frame.setVisible(false);
             frame = usersForm.CreateForm(this, success);
-        } else if (e.getSource() == searchUserForm.jButton2)
-        {
+        } else if (e.getSource() == searchUserForm.jButton2) {
             LinkedList success2 = null;
             try {
                 success2 = queries.search("%", "ID", "USERS", tools);
@@ -508,9 +529,7 @@ public class Logic implements ActionListener {
             modeForm = new ModeForm();
             frame.setVisible(false);
             frame = modeForm.CreateForm(this);
-        }
-        else if(e.getSource()==settingsForm.SettingsExitButton)
-        {
+        } else if (e.getSource() == settingsForm.SettingsExitButton) {
             modeForm = new ModeForm();
             frame.setVisible(false);
             frame = modeForm.CreateForm(this);
