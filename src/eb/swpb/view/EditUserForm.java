@@ -106,8 +106,8 @@ public class EditUserForm extends javax.swing.JFrame{
         jLabel4.setText("Imie");
         jLabel5.setText("Data Urodzenia [dd/mm/rrrr]");
         jLabel6.setText("Ulica");
-        jLabel7.setText("/");
-        jLabel8.setText("/");
+        jLabel7.setText("-");
+        jLabel8.setText("-");
         UserFlatTextField.setToolTipText("");
         jLabel9.setText("-");
         UserHouseTextField.setToolTipText("");
